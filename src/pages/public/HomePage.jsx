@@ -19,7 +19,7 @@ const heroSlides = [
     highlight: 'Parenthood',
     titleEnd: 'Starts Here',
     subtitle: 'Access world-class IVF treatments at a fraction of the cost. We connect you with top fertility specialists across 6 countries.',
-    overlay: 'from-primary-900/80 via-primary-900/60 to-primary-900/40',
+    overlay: 'from-primary-900/60 via-primary-900/40 to-primary-900/20',
   },
   {
     image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=1920&q=80',
@@ -27,7 +27,7 @@ const heroSlides = [
     highlight: 'Fertility',
     titleEnd: 'Specialists',
     subtitle: '42 vetted doctors across 12 JCI-accredited clinics with proven success rates and personalized treatment plans.',
-    overlay: 'from-primary-900/80 via-primary-800/55 to-accent-900/40',
+    overlay: 'from-primary-900/60 via-primary-800/35 to-accent-900/20',
   },
   {
     image: 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=1920&q=80',
@@ -35,7 +35,7 @@ const heroSlides = [
     highlight: 'IVF Technology',
     titleEnd: 'Global Access',
     subtitle: 'From PGT genetic testing to ICSI and egg freezing — cutting-edge reproductive science at affordable prices worldwide.',
-    overlay: 'from-accent-900/75 via-primary-900/55 to-primary-900/40',
+    overlay: 'from-accent-900/55 via-primary-900/35 to-primary-900/20',
   },
   {
     image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1920&q=80',
@@ -43,7 +43,7 @@ const heroSlides = [
     highlight: 'Care Package',
     titleEnd: 'For Your Trip',
     subtitle: 'Travel arrangements, visa support, boutique hotels, and a dedicated coordinator — we handle everything so you can focus on your family.',
-    overlay: 'from-primary-900/80 via-primary-900/60 to-accent-900/35',
+    overlay: 'from-primary-900/60 via-primary-900/40 to-accent-900/15',
   },
 ];
 
@@ -126,10 +126,10 @@ export default function HomePage() {
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-2xl lg:max-w-3xl">
-              <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-6">
+              {/* <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-6">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-sm font-medium text-white/90">Trusted by 12,500+ families worldwide</span>
-              </div>
+              </div> */}
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] text-white">
                 {heroSlides[currentSlide].title}{' '}
