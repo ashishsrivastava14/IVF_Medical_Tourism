@@ -277,6 +277,15 @@
   }
 }
 
+@keyframes slideProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
 /* ===== Custom Styles ===== */
 
 /* Smooth page transitions */
