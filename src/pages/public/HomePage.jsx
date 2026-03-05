@@ -19,7 +19,7 @@ const heroSlides = [
     highlight: 'Parenthood',
     titleEnd: 'Starts Here',
     subtitle: 'Access world-class IVF treatments at a fraction of the cost. We connect you with top fertility specialists across 6 countries.',
-    overlay: 'from-primary-900/60 via-primary-900/40 to-primary-900/20',
+    overlay: 'from-primary-900/40 via-primary-900/20 to-primary-900/10',
   },
   {
     image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?auto=format&fit=crop&w=1920&q=80',
@@ -27,7 +27,7 @@ const heroSlides = [
     highlight: 'Fertility',
     titleEnd: 'Specialists',
     subtitle: '42 vetted doctors across 12 JCI-accredited clinics with proven success rates and personalized treatment plans.',
-    overlay: 'from-primary-900/60 via-primary-800/35 to-accent-900/20',
+    overlay: 'from-primary-900/40 via-primary-900/20 to-primary-900/10',
   },
   {
     image: 'https://images.unsplash.com/photo-1631815588090-d4bfec5b1ccb?auto=format&fit=crop&w=1920&q=80',
@@ -35,7 +35,7 @@ const heroSlides = [
     highlight: 'IVF Technology',
     titleEnd: 'Global Access',
     subtitle: 'From PGT genetic testing to ICSI and egg freezing — cutting-edge reproductive science at affordable prices worldwide.',
-    overlay: 'from-accent-900/55 via-primary-900/35 to-primary-900/20',
+    overlay: 'from-primary-900/40 via-primary-900/20 to-primary-900/10',
   },
   {
     image: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=1920&q=80',
@@ -43,7 +43,7 @@ const heroSlides = [
     highlight: 'Care Package',
     titleEnd: 'For Your Trip',
     subtitle: 'Travel arrangements, visa support, boutique hotels, and a dedicated coordinator — we handle everything so you can focus on your family.',
-    overlay: 'from-primary-900/60 via-primary-900/40 to-accent-900/15',
+    overlay: 'from-primary-900/40 via-primary-900/20 to-primary-900/10',
   },
 ];
 
@@ -224,15 +224,17 @@ export default function HomePage() {
 
 
       {/* ═══════════════════════════════════════════════════════════
-          HOW IT WORKS — Process Timeline
+          HOW IT WORKS — Interactive Process Timeline
        ═══════════════════════════════════════════════════════════ */}
-      <section className="pt-4 pb-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden">
+      <section className="pt-8 pb-14 bg-gradient-to-b from-white via-primary-50/30 to-white relative overflow-hidden">
         {/* Background accents */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary-50/40 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-accent-50/30 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 relative">
-          <div className="text-center mb-10">
-            
+          {/* Header */}
+          <div className="text-center mb-12">
+           
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900">
               How It <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">Works</span>
             </h2>
@@ -241,32 +243,80 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
-            {processSteps.map((item, i) => (
-              <div key={i} className="group relative">
-                {/* Connector line */}
-                {i < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-12 left-[60%] right-0 h-[2px]">
-                    <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-100" />
-                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-gray-200" />
-                  </div>
-                )}
-                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
-                  {/* Glow on hover */}
-                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${item.color} blur-3xl scale-150`} style={{ opacity: 0 }} />
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 bg-gradient-to-br from-current to-transparent" />
+          {/* Desktop: Horizontal timeline with connecting line */}
+          <div className="hidden lg:block relative">
+            {/* Central connecting line */}
+            <div className="absolute top-[52px] left-[12%] right-[12%] h-[2px]">
+              <div className="w-full h-full bg-gradient-to-r from-primary-200 via-accent-200 to-amber-200 rounded-full" />
+            </div>
 
-                  <div className="relative">
-                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                      <item.icon className="w-7 h-7 text-white" />
+            <div className="grid grid-cols-4 gap-6">
+              {processSteps.map((item, i) => (
+                <div key={i} className="group relative flex flex-col items-center text-center">
+                  {/* Step number ring + icon */}
+                  <div className="relative mb-6">
+                    {/* Animated ring */}
+                    <div className={`absolute -inset-3 rounded-full bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 blur-xl transition-all duration-700`} />
+                    <div className={`relative w-[104px] h-[104px] rounded-full bg-white border-2 border-gray-100 shadow-lg group-hover:shadow-2xl group-hover:border-transparent transition-all duration-500 flex items-center justify-center`}>
+                      {/* Gradient border on hover */}
+                      <div className={`absolute inset-0 rounded-full bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                      <div className="absolute inset-[2px] rounded-full bg-white group-hover:bg-gray-50/80 transition-colors duration-500" />
+                      <div className="relative flex flex-col items-center">
+                        <item.icon className={`w-8 h-8 text-gray-400 group-hover:text-transparent transition-colors duration-500`} style={{ WebkitBackgroundClip: 'text' }} />
+                        <div className={`w-8 h-8 absolute bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 [mask-image:var(--icon-mask)]`}>
+                          <item.icon className="w-8 h-8 text-white" />
+                        </div>
+                      </div>
                     </div>
-                    <span className="text-xs font-bold text-gray-300 tracking-widest uppercase">Step {item.step}</span>
-                    <h3 className="text-xl font-bold text-gray-900 mt-1">{item.title}</h3>
-                    <p className="mt-2 text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                    {/* Step badge */}
+                    <div className={`absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center shadow-md border-2 border-white`}>
+                      <span className="text-xs font-bold text-white">{item.step}</span>
+                    </div>
+                  </div>
+
+                  {/* Content card */}
+                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-5 border border-gray-100/80 shadow-sm group-hover:shadow-xl group-hover:bg-white group-hover:-translate-y-1 transition-all duration-500 w-full">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile/Tablet: Vertical timeline */}
+          <div className="lg:hidden relative">
+            <div className="absolute left-8 top-0 bottom-0 w-[2px] bg-gradient-to-b from-primary-200 via-accent-200 to-amber-200 rounded-full" />
+
+            <div className="space-y-6">
+              {processSteps.map((item, i) => (
+                <div key={i} className="group relative flex gap-5 items-start">
+                  {/* Timeline node */}
+                  <div className="relative flex-shrink-0">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-500`}>
+                      <item.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white border-2 border-gray-100 flex items-center justify-center shadow-sm`}>
+                      <span className="text-[10px] font-bold text-gray-500">{item.step}</span>
+                    </div>
+                  </div>
+
+                  {/* Card */}
+                  <div className="flex-1 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm group-hover:shadow-lg group-hover:border-gray-200 transition-all duration-500">
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{item.title}</h3>
+                    <p className="text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-10 text-center">
+            <Link to="/contact" className="group inline-flex items-center gap-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-primary-500/20 hover:shadow-primary-500/40 hover:-translate-y-0.5 transition-all duration-300">
+              Start Your Free Consultation
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
