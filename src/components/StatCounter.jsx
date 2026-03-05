@@ -1,9 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
+import { Baby, Building2, Globe, TrendingUp } from 'lucide-react';
 
-export default function StatCounter({ value, suffix = '', label }) {
+const iconMap = {
+  'Babies Born': Baby,
+  'Partner Clinics': Building2,
+  'Countries Served': Globe,
+  'Success Rate': TrendingUp,
+};
+
+const colorMap = {
+  0: 'from-primary-500 to-sky-400',
+  1: 'from-accent-500 to-pink-400',
+  2: 'from-emerald-500 to-teal-400',
+  3: 'from-amber-500 to-orange-400',
+};
+
+export default function StatCounter({ value, suffix = '', label, index = 0 }) {
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
   const counted = useRef(false);
+  const Icon = iconMap[label] || TrendingUp;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -28,11 +44,14 @@ export default function StatCounter({ value, suffix = '', label }) {
   }, [value]);
 
   return (
-    <div ref={ref} className="text-center">
-      <p className="text-4xl md:text-5xl font-bold text-white">
+    <div ref={ref} className="flex flex-col items-center gap-2 py-5 px-4">
+      <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${colorMap[index % 4]} flex items-center justify-center shadow-sm mb-1`}>
+        <Icon className="w-5 h-5 text-white" />
+      </div>
+      <p className="text-3xl md:text-4xl font-extrabold text-gray-900 tabular-nums">
         {display.toLocaleString()}{suffix}
       </p>
-      <p className="mt-1 text-primary-200 text-sm">{label}</p>
+      <p className="text-sm text-gray-500 font-medium">{label}</p>
     </div>
   );
 }

@@ -1,7 +1,12 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Globe, ShieldCheck, Heart, Stethoscope, DollarSign, Plane, ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
-import { doctors, clinics, testimonials, globalStats, packages } from '../../data/mockData';
+import {
+  ArrowRight, Globe, ShieldCheck, Heart, Stethoscope, DollarSign,
+  Plane, CheckCircle2,
+  Sparkles, Star, MapPin, Users, Baby, Award, Clock, ArrowUpRight,
+  Quote, Building2, Microscope, HeartHandshake, Zap
+} from 'lucide-react';
+import { doctors, clinics, testimonials, globalStats, packages, countries } from '../../data/mockData';
 import DoctorCard from '../../components/DoctorCard';
 import TestimonialCard from '../../components/TestimonialCard';
 import StatCounter from '../../components/StatCounter';
@@ -42,27 +47,31 @@ const heroSlides = [
   },
 ];
 
+const processSteps = [
+  { step: '01', title: 'Free Consultation', desc: 'Share your medical history online and get matched with the right specialist.', icon: Stethoscope, color: 'from-primary-500 to-sky-400' },
+  { step: '02', title: 'Treatment Plan', desc: 'Receive a personalized plan with cost breakdown and timeline.', icon: Microscope, color: 'from-accent-500 to-pink-400' },
+  { step: '03', title: 'Travel & Stay', desc: 'We arrange flights, visa, hotel, and airport pickup for your comfort.', icon: Plane, color: 'from-emerald-500 to-teal-400' },
+  { step: '04', title: 'Treatment & Care', desc: 'Expert treatment with your dedicated coordinator by your side.', icon: HeartHandshake, color: 'from-amber-500 to-orange-400' },
+];
+
 export default function HomePage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [slideDirection, setSlideDirection] = useState('right');
+  const isPlaying = true;
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   const featuredDoctors = doctors.slice(0, 3);
   const featuredTestimonials = testimonials.slice(0, 3);
-  const featuredPackages = packages.filter(p => p.popular);
+  const featuredPackages = packages.filter(p => p.popular).slice(0, 3);
 
   const goToSlide = useCallback((index) => {
-    setSlideDirection(index > currentSlide ? 'right' : 'left');
     setCurrentSlide(index);
-  }, [currentSlide]);
+  }, []);
 
   const nextSlide = useCallback(() => {
-    setSlideDirection('right');
     setCurrentSlide(prev => (prev + 1) % heroSlides.length);
   }, []);
 
   const prevSlide = useCallback(() => {
-    setSlideDirection('left');
     setCurrentSlide(prev => (prev - 1 + heroSlides.length) % heroSlides.length);
   }, []);
 
@@ -72,30 +81,31 @@ export default function HomePage() {
     return () => clearInterval(timer);
   }, [isPlaying, nextSlide]);
 
+  // Auto-rotate testimonials
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTestimonial(prev => (prev + 1) % featuredTestimonials.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [featuredTestimonials.length]);
+
   return (
-    <div>
-      {/* ─── Hero Slider ─── */}
-      <section className="relative h-[600px] md:h-[700px] lg:h-[750px] overflow-hidden">
-        {/* Slides */}
+    <div className="overflow-hidden">
+
+      {/* ═══════════════════════════════════════════════════════════
+          HERO SLIDER
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="relative h-[560px] md:h-[620px] lg:h-[680px] overflow-hidden">
         {heroSlides.map((slide, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-all duration-[800ms] ease-in-out ${
-              index === currentSlide
-                ? 'opacity-100 scale-100'
-                : 'opacity-0 scale-105'
+              index === currentSlide ? 'opacity-100 scale-100' : 'opacity-0 scale-105'
             }`}
           >
-            {/* Background Image */}
             <div className="absolute inset-0">
-              <img
-                src={slide.image}
-                alt=""
-                className="w-full h-full object-cover"
-              />
-              {/* Gradient Overlay */}
+              <img src={slide.image} alt="" className="w-full h-full object-cover" />
               <div className={`absolute inset-0 bg-gradient-to-r ${slide.overlay}`} />
-              {/* Subtle pattern overlay */}
               <div className="absolute inset-0 opacity-[0.03]" style={{
                 backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
                 backgroundSize: '40px 40px'
@@ -104,28 +114,23 @@ export default function HomePage() {
           </div>
         ))}
 
-        {/* Floating decorative elements */}
+        {/* Decorative elements */}
         <div className="absolute inset-0 pointer-events-none z-[1]">
           <div className="absolute top-20 right-[10%] w-32 h-32 border border-white/10 rounded-full animate-[spin_20s_linear_infinite]" />
           <div className="absolute bottom-32 right-[20%] w-20 h-20 border border-accent-400/20 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
           <div className="absolute top-40 right-[30%] w-2 h-2 bg-accent-400/40 rounded-full animate-pulse" />
-          <div className="absolute top-60 right-[15%] w-3 h-3 bg-white/20 rounded-full animate-pulse delay-700" />
-          <div className="absolute bottom-40 left-[5%] w-2 h-2 bg-accent-300/30 rounded-full animate-pulse delay-1000" />
+          <div className="absolute top-60 right-[15%] w-3 h-3 bg-white/20 rounded-full animate-pulse" />
         </div>
 
         {/* Content */}
         <div className="relative z-10 h-full flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="max-w-2xl lg:max-w-3xl">
-              {/* Badge */}
-              <div className={`inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-6 transition-all duration-700 ${
-                currentSlide === heroSlides.indexOf(heroSlides[currentSlide]) ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-              }`}>
+              <div className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 px-4 py-2 rounded-full mb-6">
                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
                 <span className="text-sm font-medium text-white/90">Trusted by 12,500+ families worldwide</span>
               </div>
 
-              {/* Title */}
               <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] text-white">
                 {heroSlides[currentSlide].title}{' '}
                 <span className="relative inline-block">
@@ -138,48 +143,37 @@ export default function HomePage() {
                 <span className="text-white">{heroSlides[currentSlide].titleEnd}</span>
               </h1>
 
-              {/* Subtitle */}
               <p className="mt-6 text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl">
                 {heroSlides[currentSlide].subtitle}
               </p>
 
-              {/* CTA Buttons */}
               <div className="mt-8 flex flex-wrap gap-3 sm:gap-4">
-                <Link
-                  to="/cost-calculator"
+                <Link to="/cost-calculator"
                   className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-pink-500 text-white px-6 sm:px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-accent-500/25 hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Calculate Your Savings
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link
-                  to="/doctors"
+                <Link to="/doctors"
                   className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/25 text-white px-6 sm:px-8 py-3.5 rounded-xl font-semibold hover:bg-white/20 hover:border-white/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Find a Doctor
                 </Link>
               </div>
 
-              {/* Trust badges */}
               <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm">
-                <span className="flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm">
-                    <ShieldCheck className="w-4 h-4 text-accent-300" />
+                {[
+                  { icon: ShieldCheck, label: 'JCI-Accredited Clinics' },
+                  { icon: Globe, label: '6+ Countries' },
+                  { icon: Heart, label: '12,500+ Babies Born' },
+                ].map((badge, i) => (
+                  <span key={i} className="flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors">
+                    <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm">
+                      <badge.icon className="w-4 h-4 text-accent-300" />
+                    </span>
+                    {badge.label}
                   </span>
-                  JCI-Accredited Clinics
-                </span>
-                <span className="flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm">
-                    <Globe className="w-4 h-4 text-accent-300" />
-                  </span>
-                  6+ Countries
-                </span>
-                <span className="flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm">
-                    <Heart className="w-4 h-4 text-accent-300" />
-                  </span>
-                  12,500+ Babies Born
-                </span>
+                ))}
               </div>
             </div>
           </div>
@@ -187,175 +181,458 @@ export default function HomePage() {
 
         {/* Slider Controls */}
         <div className="absolute bottom-0 left-0 right-0 z-20">
-          {/* Progress bar */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center gap-3 pb-8">
-              {/* Arrow Controls */}
-              <div className="hidden md:flex items-center gap-2 mr-2">
-                <button
-                  onClick={prevSlide}
-                  className="w-10 h-10 rounded-full border border-white/25 backdrop-blur-md bg-white/5 flex items-center justify-center text-white/70 hover:bg-white/15 hover:text-white hover:border-white/40 transition-all"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="w-10 h-10 rounded-full border border-white/25 backdrop-blur-md bg-white/5 flex items-center justify-center text-white/70 hover:bg-white/15 hover:text-white hover:border-white/40 transition-all"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Slide indicators */}
+            <div className="flex items-center gap-3 pb-24">
               <div className="flex items-center gap-2 flex-1">
                 {heroSlides.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToSlide(index)}
-                    className="group relative flex-1 max-w-[120px]"
-                  >
+                  <button key={index} onClick={() => goToSlide(index)} className="group relative flex-1 max-w-[120px]">
                     <div className="h-[3px] rounded-full bg-white/20 overflow-hidden">
                       <div
                         className={`h-full rounded-full transition-all ${
-                          index === currentSlide
-                            ? 'bg-gradient-to-r from-accent-400 to-pink-400'
-                            : index < currentSlide
-                              ? 'bg-white/50 w-full'
-                              : 'w-0'
+                          index === currentSlide ? 'bg-gradient-to-r from-accent-400 to-pink-400' : index < currentSlide ? 'bg-white/50 w-full' : 'w-0'
                         }`}
-                        style={index === currentSlide ? {
-                          animation: isPlaying ? 'slideProgress 5.5s linear' : 'none',
-                          width: '100%',
-                        } : {}}
+                        style={index === currentSlide ? { animation: isPlaying ? 'slideProgress 5.5s linear' : 'none', width: '100%' } : {}}
                       />
                     </div>
-                    <span className={`absolute -top-7 left-0 text-xs font-medium transition-opacity ${
-                      index === currentSlide ? 'text-white/80 opacity-100' : 'opacity-0'
-                    }`}>
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
                   </button>
                 ))}
               </div>
-
-              {/* Play / Pause */}
-              <button
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="w-10 h-10 rounded-full border border-white/25 backdrop-blur-md bg-white/5 flex items-center justify-center text-white/70 hover:bg-white/15 hover:text-white hover:border-white/40 transition-all"
-              >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
-              </button>
-
-              {/* Slide counter */}
               <span className="hidden sm:block text-white/50 text-sm font-mono tabular-nums ml-1">
                 {String(currentSlide + 1).padStart(2, '0')} / {String(heroSlides.length).padStart(2, '0')}
               </span>
             </div>
           </div>
         </div>
-
-        {/* Bottom gradient fade */}
         <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-primary-900/50 to-transparent z-[5]" />
       </section>
 
-      {/* ─── Stats ─── */}
-      <section className="bg-primary-800 py-12">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {globalStats.map(s => (
-            <StatCounter key={s.label} value={s.value} suffix={s.suffix} label={s.label} />
-          ))}
+
+      {/* ═══════════════════════════════════════════════════════════
+          STATS BAR — Floating Glass Card
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="relative z-20 -mt-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="bg-white rounded-2xl shadow-2xl shadow-gray-200/60 border border-gray-100 p-2">
+            <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
+              {globalStats.map((s, i) => (
+                <StatCounter key={s.label} value={s.value} suffix={s.suffix} label={s.label} index={i} />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ─── Why Choose Us ─── */}
-      <section className="py-16 md:py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-gray-900">Why Choose FertiCare Global?</h2>
-            <p className="mt-3 text-gray-500 max-w-2xl mx-auto">We make fertility treatment abroad simple, safe, and affordable.</p>
+
+      {/* ═══════════════════════════════════════════════════════════
+          HOW IT WORKS — Process Timeline
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="pt-4 pb-12 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden">
+        {/* Background accents */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary-50/40 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 relative">
+          <div className="text-center mb-10">
+            
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900">
+              How It <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">Works</span>
+            </h2>
+            <p className="mt-3 text-gray-500 text-lg max-w-2xl mx-auto">
+              From your first consultation to treatment day, we guide you every step of the way.
+            </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { icon: DollarSign, title: 'Save Up to 70%', desc: 'World-class IVF from $3,500. Same quality as the US or UK at a fraction of the price.' },
-              { icon: Stethoscope, title: 'Top-Rated Specialists', desc: '42 vetted fertility doctors across 12 accredited clinics with proven success rates.' },
-              { icon: Plane, title: 'Full Concierge Service', desc: 'Visa support, flights, hotel, airport pickup, translation — we handle everything.' },
-            ].map((item, i) => (
-              <div key={i} className="bg-gray-50 rounded-xl p-6 text-center hover:shadow-md transition">
-                <div className="w-14 h-14 bg-primary-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-7 h-7 text-primary-600" />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-4">
+            {processSteps.map((item, i) => (
+              <div key={i} className="group relative">
+                {/* Connector line */}
+                {i < processSteps.length - 1 && (
+                  <div className="hidden lg:block absolute top-12 left-[60%] right-0 h-[2px]">
+                    <div className="w-full h-full bg-gradient-to-r from-gray-200 to-gray-100" />
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-gray-200" />
+                  </div>
+                )}
+                <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
+                  {/* Glow on hover */}
+                  <div className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br ${item.color} blur-3xl scale-150`} style={{ opacity: 0 }} />
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 bg-gradient-to-br from-current to-transparent" />
+
+                  <div className="relative">
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-5 shadow-lg group-hover:scale-110 transition-transform duration-500`}>
+                      <item.icon className="w-7 h-7 text-white" />
+                    </div>
+                    <span className="text-xs font-bold text-gray-300 tracking-widest uppercase">Step {item.step}</span>
+                    <h3 className="text-xl font-bold text-gray-900 mt-1">{item.title}</h3>
+                    <p className="mt-2 text-gray-500 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">{item.title}</h3>
-                <p className="mt-2 text-sm text-gray-500 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── Featured Doctors ─── */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <h2 className="text-3xl font-display font-bold text-gray-900">Featured Doctors</h2>
-              <p className="mt-1 text-gray-500">Hand-picked fertility experts with exceptional track records</p>
+
+      {/* ═══════════════════════════════════════════════════════════
+          WHY CHOOSE US — Modern Bento Grid
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="py-14 bg-gray-950 relative overflow-hidden">
+        {/* Background effects */}
+        <div className="absolute inset-0">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-500/10 rounded-full blur-3xl" />
+          <div className="absolute inset-0 opacity-[0.02]" style={{
+            backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
+            backgroundSize: '32px 32px'
+          }} />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 relative z-10">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 bg-white/5 border border-white/10 text-accent-300 text-sm font-semibold px-4 py-1.5 rounded-full mb-3">
+              <Sparkles className="w-4 h-4" /> Why FertiCare Global
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white">
+              Everything You Need,{' '}
+              <span className="bg-gradient-to-r from-accent-400 to-pink-400 bg-clip-text text-transparent">One Platform</span>
+            </h2>
+            <p className="mt-3 text-gray-400 text-lg max-w-2xl mx-auto">
+              We combine medical excellence with hospitality — making fertility treatment abroad seamless.
+            </p>
+          </div>
+
+          {/* Bento Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Card 1 — Big */}
+            <div className="lg:row-span-2 group bg-gradient-to-br from-primary-500/10 to-primary-600/5 border border-white/[0.06] rounded-3xl p-8 hover:border-primary-500/30 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-primary-500/10 rounded-full blur-2xl group-hover:bg-primary-500/20 transition-all" />
+              <div className="relative">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-sky-400 flex items-center justify-center mb-6 shadow-lg shadow-primary-500/20">
+                  <DollarSign className="w-8 h-8 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-3">Save Up to 70%</h3>
+                <p className="text-gray-400 leading-relaxed mb-6">
+                  World-class IVF from $3,500. Same quality as the US or UK at a fraction of the price. All costs transparent and upfront — no surprises.
+                </p>
+                <div className="space-y-3">
+                  {[
+                    { label: 'IVF Treatment', home: '$15,000', abroad: '$3,500' },
+                    { label: 'ICSI + PGT', home: '$22,000', abroad: '$6,000' },
+                    { label: 'Egg Donation', home: '$30,000', abroad: '$8,000' },
+                  ].map((row, i) => (
+                    <div key={i} className="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3">
+                      <span className="text-sm text-gray-300">{row.label}</span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm text-gray-500 line-through">{row.home}</span>
+                        <span className="text-sm font-bold text-emerald-400">{row.abroad}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-            <Link to="/doctors" className="hidden md:flex items-center gap-1 text-primary-600 font-semibold hover:underline">
-              View All <ArrowRight className="w-4 h-4" />
+
+            {/* Card 2 */}
+            <div className="group bg-gradient-to-br from-accent-500/10 to-accent-600/5 border border-white/[0.06] rounded-3xl p-8 hover:border-accent-500/30 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-accent-500/10 rounded-full blur-2xl group-hover:bg-accent-500/20 transition-all" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-pink-400 flex items-center justify-center mb-5 shadow-lg shadow-accent-500/20">
+                  <Stethoscope className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Top-Rated Specialists</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  42 vetted fertility doctors across 12 accredited clinics with proven success rates averaging 68%.
+                </p>
+                <div className="mt-5 flex items-center gap-3">
+                  <div className="flex -space-x-2">
+                    {doctors.slice(0, 4).map((d, i) => (
+                      <img key={i} src={d.photo} alt="" className="w-9 h-9 rounded-full border-2 border-gray-950 object-cover" />
+                    ))}
+                  </div>
+                  <span className="text-xs text-gray-400">+38 more specialists</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3 */}
+            <div className="group bg-gradient-to-br from-emerald-500/10 to-teal-600/5 border border-white/[0.06] rounded-3xl p-8 hover:border-emerald-500/30 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-all" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-400 flex items-center justify-center mb-5 shadow-lg shadow-emerald-500/20">
+                  <Plane className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Full Concierge Service</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  Visa support, flights, boutique hotels, airport pickup, and a dedicated coordinator who speaks your language.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {['Visa', 'Flights', 'Hotels', 'Transfers', 'Translation'].map(tag => (
+                    <span key={tag} className="text-xs bg-emerald-500/10 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/20">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Card 4 */}
+            <div className="group bg-gradient-to-br from-amber-500/10 to-orange-600/5 border border-white/[0.06] rounded-3xl p-8 hover:border-amber-500/30 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center mb-5 shadow-lg shadow-amber-500/20">
+                  <ShieldCheck className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">Guaranteed Transparency</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  No hidden fees. Every cost is itemized before you commit. Payment plans available for all budgets.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 5 */}
+            <div className="group bg-gradient-to-br from-violet-500/10 to-purple-600/5 border border-white/[0.06] rounded-3xl p-8 hover:border-violet-500/30 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-violet-500/10 rounded-full blur-2xl group-hover:bg-violet-500/20 transition-all" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-400 flex items-center justify-center mb-5 shadow-lg shadow-violet-500/20">
+                  <Globe className="w-7 h-7 text-white" />
+                </div>
+                <h3 className="text-xl font-bold text-white mb-2">6+ Countries</h3>
+                <p className="text-gray-400 text-sm leading-relaxed mb-4">
+                  Access top clinics across India, Mexico, Czech Republic, Japan, UAE, Greece, and more.
+                </p>
+                <div className="flex items-center gap-3">
+                  {countries.slice(0, 6).map((c) => (
+                    <span key={c.code} className="text-2xl" title={c.name}>{c.flag}</span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* ═══════════════════════════════════════════════════════════
+          FEATURED DOCTORS
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="py-14 bg-gradient-to-b from-white to-gray-50/80 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-50/50 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 relative">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+            <div>
+              
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900">
+                Meet Our <span className="bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent">Doctors</span>
+              </h2>
+              <p className="mt-3 text-gray-500 text-lg max-w-lg">Hand-picked fertility experts with exceptional track records and compassionate care.</p>
+            </div>
+            <Link to="/doctors" className="group hidden md:inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all">
+              View All Doctors
+              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </Link>
           </div>
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredDoctors.map(d => <DoctorCard key={d.id} doctor={d} />)}
           </div>
-          <div className="mt-6 text-center md:hidden">
-            <Link to="/doctors" className="text-primary-600 font-semibold">View All Doctors →</Link>
+
+          <div className="mt-8 text-center md:hidden">
+            <Link to="/doctors" className="inline-flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-xl font-semibold">
+              View All Doctors <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ─── Popular Packages ─── */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
+
+      {/* ═══════════════════════════════════════════════════════════
+          PACKAGES — Featured 3 with accent bg
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="py-14 bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-60 h-60 bg-primary-100 rounded-full blur-3xl opacity-50" />
+        <div className="absolute -bottom-20 -right-20 w-60 h-60 bg-accent-100 rounded-full blur-3xl opacity-50" />
+
+        <div className="max-w-7xl mx-auto px-4 relative">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-display font-bold text-gray-900">Popular Treatment Packages</h2>
-            <p className="mt-2 text-gray-500">All-inclusive packages with transparent pricing — no hidden fees</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900">
+              Popular <span className="bg-gradient-to-r from-accent-500 to-pink-500 bg-clip-text text-transparent">Treatment Packages</span>
+            </h2>
+            <p className="mt-3 text-gray-500 text-lg max-w-2xl mx-auto">All-inclusive packages with transparent pricing — no hidden fees, ever.</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredPackages.map(p => (
-              <PackageCard key={p.id} pkg={p} clinicName={clinics.find(c => c.id === p.clinicId)?.name} />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {featuredPackages.map((p, i) => (
+              <PackageCard key={p.id} pkg={p} clinicName={clinics.find(c => c.id === p.clinicId)?.name} featured={i === 1} />
             ))}
           </div>
+
           <div className="mt-8 text-center">
-            <Link to="/packages" className="btn-outline">Build Custom Package</Link>
+            <Link to="/packages" className="group inline-flex items-center gap-2 bg-white border-2 border-gray-200 text-gray-800 px-8 py-3.5 rounded-xl font-semibold hover:border-primary-300 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+              Build Custom Package
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* ─── Testimonials ─── */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4">
+
+      {/* ═══════════════════════════════════════════════════════════
+          TESTIMONIALS — Large Featured + Cards
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="py-14 bg-white relative overflow-hidden">
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-96 h-96 bg-primary-50/60 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 relative">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-display font-bold text-gray-900">Patient Success Stories</h2>
-            <p className="mt-2 text-gray-500">Real stories from real families who trusted FertiCare Global</p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900">
+              Families We've <span className="bg-gradient-to-r from-pink-500 to-accent-500 bg-clip-text text-transparent">Helped</span>
+            </h2>
+            <p className="mt-3 text-gray-500 text-lg max-w-2xl mx-auto">Real stories from real families who trusted FertiCare Global with their dream.</p>
           </div>
+
+          {/* Featured testimonial */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="relative bg-gradient-to-br from-primary-50 to-accent-50 rounded-3xl p-8 md:p-12 border border-primary-100/50">
+              <Quote className="absolute top-6 left-6 md:top-8 md:left-8 w-12 h-12 text-primary-200" />
+              <div className="relative">
+                <div className="min-h-[120px]">
+                  {featuredTestimonials.map((t, i) => (
+                    <div key={t.id} className={`transition-all duration-500 ${i === activeTestimonial ? 'opacity-100' : 'opacity-0 absolute inset-0 pointer-events-none'}`}>
+                      <p className="text-lg md:text-xl text-gray-700 leading-relaxed font-medium pl-6 md:pl-8">
+                        "{t.text}"
+                      </p>
+                      <div className="mt-6 flex items-center justify-between pl-6 md:pl-8">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary-400 to-accent-400 flex items-center justify-center text-white font-bold text-lg">
+                            {t.name.charAt(0)}
+                          </div>
+                          <div>
+                            <p className="font-bold text-gray-900">{t.name}</p>
+                            <p className="text-sm text-gray-500">{t.treatment}</p>
+                          </div>
+                        </div>
+                        <div className="flex gap-1">
+                          {Array.from({ length: 5 }).map((_, j) => (
+                            <Star key={j} className={`w-4 h-4 ${j < t.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'}`} />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Dots */}
+                <div className="flex items-center justify-center gap-2 mt-8">
+                  {featuredTestimonials.map((_, i) => (
+                    <button key={i} onClick={() => setActiveTestimonial(i)}
+                      className={`h-2 rounded-full transition-all duration-300 ${i === activeTestimonial ? 'w-8 bg-primary-500' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Testimonial mini-cards */}
           <div className="grid md:grid-cols-3 gap-6">
             {featuredTestimonials.map(t => <TestimonialCard key={t.id} testimonial={t} />)}
           </div>
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
-      <section className="bg-gradient-to-r from-primary-600 to-accent-600 py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-display font-bold">Ready to Start Your Fertility Journey?</h2>
-          <p className="mt-4 text-primary-100 text-lg">Get a free, no-obligation consultation and personalized treatment plan.</p>
+
+      {/* ═══════════════════════════════════════════════════════════
+          DESTINATIONS — Country Cards
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="py-14 bg-gray-50 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <span className="inline-flex items-center gap-2 bg-primary-50 text-primary-600 text-sm font-semibold px-4 py-1.5 rounded-full mb-3">
+              <Globe className="w-4 h-4" /> Global Network
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-gray-900">
+              Top <span className="bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent">Destinations</span>
+            </h2>
+            <p className="mt-3 text-gray-500 text-lg max-w-2xl mx-auto">
+              Choose from world-renowned fertility hubs with competitive pricing and warm hospitality.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+            {countries.slice(0, 6).map((country) => {
+              const countryDoctors = doctors.filter(d => d.country === country.code);
+              const countryClinics = clinics.filter(c => c.country === country.code);
+              return (
+                <Link key={country.code} to={`/clinics?country=${country.code}`}
+                  className="group relative bg-white rounded-2xl border border-gray-100 p-5 text-center hover:shadow-xl hover:-translate-y-2 transition-all duration-500 overflow-hidden"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 to-accent-500/0 group-hover:from-primary-500/5 group-hover:to-accent-500/5 transition-all duration-500" />
+                  <div className="relative">
+                    <span className="text-4xl block mb-3">{country.flag}</span>
+                    <h3 className="font-bold text-gray-900 text-sm">{country.name}</h3>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {countryClinics.length} clinic{countryClinics.length !== 1 ? 's' : ''} · {countryDoctors.length} doctor{countryDoctors.length !== 1 ? 's' : ''}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ═══════════════════════════════════════════════════════════
+          CTA — Final Conversion Section
+       ═══════════════════════════════════════════════════════════ */}
+      <section className="relative py-16 overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-700 to-accent-700" />
+        <div className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+            backgroundSize: '32px 32px'
+          }}
+        />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent-500/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-400/20 rounded-full blur-3xl" />
+
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full mb-6">
+            <Baby className="w-4 h-4 text-accent-300" />
+            <span className="text-sm font-medium text-white/90">Free Consultation Available</span>
+          </div>
+
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white leading-tight">
+            Ready to Start Your{' '}
+            <span className="bg-gradient-to-r from-accent-300 to-pink-300 bg-clip-text text-transparent">
+              Fertility Journey?
+            </span>
+          </h2>
+          <p className="mt-4 text-white/70 text-lg max-w-2xl mx-auto leading-relaxed">
+            Get a free, no-obligation consultation and personalized treatment plan from our expert fertility coordinators.
+          </p>
+
           <div className="mt-8 flex justify-center gap-4 flex-wrap">
-            <Link to="/contact" className="bg-white text-primary-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+            <Link to="/contact"
+              className="group inline-flex items-center gap-2 bg-white text-primary-700 px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-black/10 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
+            >
               Get Free Quote
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link to="/cost-calculator" className="border border-white/40 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10 transition">
+            <Link to="/cost-calculator"
+              className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/25 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/20 hover:-translate-y-1 transition-all duration-300"
+            >
               Cost Calculator
             </Link>
+          </div>
+
+          {/* Trust row */}
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-white/50">
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> No Hidden Fees</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> JCI-Accredited</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> 24/7 Support</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Money-Back Guarantee</span>
           </div>
         </div>
       </section>
