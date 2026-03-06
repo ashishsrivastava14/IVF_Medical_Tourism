@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { clinics, packages as allPackages, treatments } from '../../data/mockData';
+import { clinics, packages as allPackages, treatments, countries } from '../../data/mockData';
 import PackageCard from '../../components/PackageCard';
+import CountryFlag from '../../components/CountryFlag';
 
 export default function PackageBuilderPage() {
   const [treatment, setTreatment] = useState('');
@@ -29,7 +30,10 @@ export default function PackageBuilderPage() {
         </select>
         <select value={country} onChange={e => setCountry(e.target.value)} className="border rounded-lg px-3 py-2 text-sm">
           <option value="">All Countries</option>
-          {uniqueCountries.map(c => <option key={c} value={c}>{c}</option>)}
+          {uniqueCountries.map(c => {
+            const countryData = countries.find(cn => cn.code === c);
+            return <option key={c} value={c}>{countryData?.flag} {countryData?.name || c}</option>;
+          })}
         </select>
       </div>
 

@@ -62,9 +62,19 @@ export default function CostCalculatorPage() {
         </div>
         <div className="flex items-center justify-center">
           <div className="text-center">
-            <ArrowDown className="w-8 h-8 text-green-500 mx-auto" />
-            <p className="text-2xl font-bold text-green-600 mt-2">Save ${savings.toLocaleString()}</p>
-            <p className="text-sm text-gray-500">{savingsPercent}% savings</p>
+            {savings > 0 ? (
+              <>
+                <ArrowDown className="w-8 h-8 text-green-500 mx-auto" />
+                <p className="text-2xl font-bold text-green-600 mt-2">Save ${savings.toLocaleString()}</p>
+                <p className="text-sm text-gray-500">{savingsPercent}% savings</p>
+              </>
+            ) : (
+              <>
+                <ArrowDown className="w-8 h-8 text-red-400 mx-auto rotate-180" />
+                <p className="text-2xl font-bold text-red-500 mt-2">${Math.abs(savings).toLocaleString()} more</p>
+                <p className="text-sm text-gray-500">No savings — try another destination</p>
+              </>
+            )}
           </div>
         </div>
         <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">

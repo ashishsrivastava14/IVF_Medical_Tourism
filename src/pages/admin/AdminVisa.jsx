@@ -1,21 +1,27 @@
+import { useState } from 'react';
 import { visaInfo } from '../../data/mockData';
 import CountryFlag from '../../components/CountryFlag';
 import StatusBadge from '../../components/StatusBadge';
-import { adminStats } from '../../data/mockData';
+
+const initialApplications = [
+  { id: 'V-001', patient: 'Emily Chen', country: 'SG', type: 'Medical Visit Pass', submitted: '2026-03-01', status: 'pending' },
+  { id: 'V-002', patient: 'Michael Brown', country: 'CZ', type: 'Schengen Visa', submitted: '2026-02-28', status: 'pending' },
+  { id: 'V-003', patient: 'Sophia Kim', country: 'AE', type: 'Medical Tourism Visa', submitted: '2026-03-02', status: 'pending' },
+  { id: 'V-004', patient: 'Jennifer Williams', country: 'SG', type: 'Visitor Pass', submitted: '2026-02-20', status: 'approved' },
+];
 
 export default function AdminVisa() {
-  const pendingApplications = [
-    { id: 'V-001', patient: 'Emily Chen', country: 'SG', type: 'Medical Visit Pass', submitted: '2026-03-01', status: 'pending' },
-    { id: 'V-002', patient: 'Michael Brown', country: 'CZ', type: 'Schengen Visa', submitted: '2026-02-28', status: 'pending' },
-    { id: 'V-003', patient: 'Sophia Kim', country: 'AE', type: 'Medical Tourism Visa', submitted: '2026-03-02', status: 'pending' },
-    { id: 'V-004', patient: 'Jennifer Williams', country: 'SG', type: 'Visitor Pass', submitted: '2026-02-20', status: 'approved' },
-  ];
+  const [applications, setApplications] = useState(initialApplications);
+
+  const updateStatus = (id, newStatus) => {
+    setApplications(prev => prev.map(a => a.id === id ? { ...a, status: newStatus } : a));
+  };
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-display font-bold text-gray-900">Visa Management</h1>
-        <p className="text-gray-500 text-sm mt-1">{adminStats.visaPending} pending visa applications</p>
+        <p className="text-gray-500 text-sm mt-1">{applications.filter(a => a.status === 'pending').length} pending visa applications</p>
       </div>
 
       {/* Applications */}
@@ -36,7 +42,7 @@ export default function AdminVisa() {
             </tr>
           </thead>
           <tbody>
-            {pendingApplications.map(v => (
+            {applications.map(v => (
               <tr key={v.id} className="border-t hover:bg-gray-50">
                 <td className="px-5 py-3 font-mono text-xs text-gray-400">{v.id}</td>
                 <td className="px-5 py-3 font-medium text-gray-900">{v.patient}</td>
@@ -47,8 +53,8 @@ export default function AdminVisa() {
                 <td className="px-5 py-3 text-right">
                   {v.status === 'pending' && (
                     <div className="flex gap-2 justify-end">
-                      <button className="text-green-600 text-sm hover:underline">Approve</button>
-                      <button className="text-red-500 text-sm hover:underline">Reject</button>
+                      <button onClick={() => updateStatus(v.id, 'approved')} className="text-green-600 text-sm hover:underline">Approve</button>
+                      <button onClick={() => updateStatus(v.id, 'cancelled')} className="text-red-500 text-sm hover:underline">Reject</button>
                     </div>
                   )}
                 </td>

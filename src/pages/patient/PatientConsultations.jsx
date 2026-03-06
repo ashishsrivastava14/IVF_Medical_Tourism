@@ -1,9 +1,15 @@
+import { useState } from 'react';
 import { currentPatient } from '../../data/mockData';
 import StatusBadge from '../../components/StatusBadge';
+import Modal from '../../components/Modal';
 import { Video, MapPin } from 'lucide-react';
 
 export default function PatientConsultations() {
   const consultations = currentPatient.consultations;
+  const [callOpen, setCallOpen] = useState(false);
+  const [activeCall, setActiveCall] = useState(null);
+
+  const joinCall = (c) => { setActiveCall(c); setCallOpen(true); };
 
   return (
     <div>
@@ -30,13 +36,31 @@ export default function PatientConsultations() {
               </div>
               <div className="flex gap-2">
                 {c.status === 'scheduled' && (
-                  <button className="btn-primary text-sm">Join Call</button>
+                  <button onClick={() => joinCall(c)} className="btn-primary text-sm">Join Call</button>
                 )}
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      <Modal open={callOpen} onClose={() => setCallOpen(false)} title="Video Consultation" maxWidth="max-w-xl">
+        {activeCall && (
+          <div className="text-center space-y-4">
+            <div className="bg-gray-900 rounded-lg aspect-video flex items-center justify-center">
+              <div className="text-center">
+                <Video className="w-12 h-12 text-white/60 mx-auto mb-3" />
+                <p className="text-white font-medium">{activeCall.doctor}</p>
+                <p className="text-white/60 text-sm mt-1">Connecting...</p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-500">Scheduled: {activeCall.date}</p>
+            <div className="flex justify-center gap-3">
+              <button onClick={() => setCallOpen(false)} className="bg-red-500 text-white px-6 py-2 rounded-lg text-sm font-medium hover:bg-red-600 transition">End Call</button>
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

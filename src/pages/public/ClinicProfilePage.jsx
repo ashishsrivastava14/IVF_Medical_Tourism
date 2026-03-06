@@ -16,7 +16,7 @@ export default function ClinicProfilePage() {
 
   const clinicDoctors = doctors.filter(d => clinic.doctors.includes(d.id));
   const clinicPackages = allPackages.filter(p => clinic.packages?.includes(p.id));
-  const clinicTestimonials = testimonials.filter(t => t.clinic === clinic.name);
+  const clinicTestimonials = testimonials.filter(t => t.clinicId === clinic.id);
   const avgDoctorRating = clinicDoctors.length > 0
     ? (clinicDoctors.reduce((sum, d) => sum + d.rating, 0) / clinicDoctors.length).toFixed(1)
     : clinic.rating;

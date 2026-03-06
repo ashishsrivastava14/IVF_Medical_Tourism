@@ -13,7 +13,7 @@ export default function DoctorProfilePage() {
   if (!doctor) return <div className="max-w-3xl mx-auto py-20 text-center text-gray-500">Doctor not found.</div>;
 
   const clinic = clinics.find(c => c.id === doctor.clinicId);
-  const doctorTestimonials = testimonials.filter(t => t.doctorId === doctor.id || t.clinic === doctor.clinic);
+  const doctorTestimonials = testimonials.filter(t => t.clinicId === doctor.clinicId);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
