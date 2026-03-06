@@ -58,6 +58,9 @@ export default function Footer() {
             <a href="#" className="hover:text-white transition">Cookie Policy</a>
           </div>
         </div>
+        <div className="border-t border-gray-800 mt-4 pt-4 text-center text-xs text-gray-500">
+          Powered by <span className="text-gray-400 font-semibold">QuickPrepAI</span>
+        </div>
       </div>
     </footer>
   );
