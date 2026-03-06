@@ -558,14 +558,14 @@ export const costComparison = [
 
 // ─── Hotels ─────────────────────────────────
 export const hotels = [
-  { id: 1, name: 'Marina Bay Sands', city: 'Singapore', country: 'SG', stars: 5, pricePerNight: 280, distanceToClinic: '3 km', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi'] },
-  { id: 2, name: 'Shangri-La Singapore', city: 'Singapore', country: 'SG', stars: 5, pricePerNight: 220, distanceToClinic: '2 km', amenities: ['Pool', 'Spa', 'Restaurant', 'WiFi'] },
-  { id: 3, name: 'Hotel Jen Tanglin', city: 'Singapore', country: 'SG', stars: 4, pricePerNight: 120, distanceToClinic: '1 km', amenities: ['Pool', 'Restaurant', 'WiFi', 'Gym'] },
-  { id: 4, name: 'St. Regis Mexico City', city: 'Mexico City', country: 'MX', stars: 5, pricePerNight: 220, distanceToClinic: '3 km', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi'] },
-  { id: 5, name: 'Hotel Galerie Royale', city: 'Prague', country: 'CZ', stars: 4, pricePerNight: 95, distanceToClinic: '1.5 km', amenities: ['Restaurant', 'WiFi', 'Concierge'] },
-  { id: 6, name: 'Mandarin Oriental Tokyo', city: 'Tokyo', country: 'JP', stars: 5, pricePerNight: 350, distanceToClinic: '4 km', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi'] },
-  { id: 7, name: 'Ritz-Carlton DIFC', city: 'Dubai', country: 'AE', stars: 5, pricePerNight: 280, distanceToClinic: '2 km', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi', 'Concierge'] },
-  { id: 8, name: 'Electra Metropolis', city: 'Athens', country: 'GR', stars: 5, pricePerNight: 130, distanceToClinic: '3 km', amenities: ['Rooftop Pool', 'Restaurant', 'Gym', 'WiFi'] },
+  { id: 1, name: 'Marina Bay Sands', city: 'Singapore', country: 'SG', stars: 5, pricePerNight: 280, distanceToClinic: '3 km', image: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?auto=format&fit=crop&w=600&q=80', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi'] },
+  { id: 2, name: 'Shangri-La Singapore', city: 'Singapore', country: 'SG', stars: 5, pricePerNight: 220, distanceToClinic: '2 km', image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80', amenities: ['Pool', 'Spa', 'Restaurant', 'WiFi'] },
+  { id: 3, name: 'Hotel Jen Tanglin', city: 'Singapore', country: 'SG', stars: 4, pricePerNight: 120, distanceToClinic: '1 km', image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=600&q=80', amenities: ['Pool', 'Restaurant', 'WiFi', 'Gym'] },
+  { id: 4, name: 'St. Regis Mexico City', city: 'Mexico City', country: 'MX', stars: 5, pricePerNight: 220, distanceToClinic: '3 km', image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi'] },
+  { id: 5, name: 'Hotel Galerie Royale', city: 'Prague', country: 'CZ', stars: 4, pricePerNight: 95, distanceToClinic: '1.5 km', image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80', amenities: ['Restaurant', 'WiFi', 'Concierge'] },
+  { id: 6, name: 'Mandarin Oriental Tokyo', city: 'Tokyo', country: 'JP', stars: 5, pricePerNight: 350, distanceToClinic: '4 km', image: 'https://images.unsplash.com/photo-1455587734955-081b22074882?auto=format&fit=crop&w=600&q=80', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi'] },
+  { id: 7, name: 'Ritz-Carlton DIFC', city: 'Dubai', country: 'AE', stars: 5, pricePerNight: 280, distanceToClinic: '2 km', image: 'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=600&q=80', amenities: ['Pool', 'Spa', 'Restaurant', 'Gym', 'WiFi', 'Concierge'] },
+  { id: 8, name: 'Electra Metropolis', city: 'Athens', country: 'GR', stars: 5, pricePerNight: 130, distanceToClinic: '3 km', image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?auto=format&fit=crop&w=600&q=80', amenities: ['Rooftop Pool', 'Restaurant', 'Gym', 'WiFi'] },
 ];
 
 // ─── Visa info ──────────────────────────────
