@@ -33,24 +33,29 @@ export default function MedicalTourismPage() {
             <span className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/20 text-white/90 text-sm font-medium px-4 py-2 rounded-full mb-6">
               <Globe className="w-4 h-4 text-accent-300" /> Your Complete Medical Tourism Guide
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight">
-              Fertility Treatment{' '}
-              <span className="bg-gradient-to-r from-accent-300 to-pink-300 bg-clip-text text-transparent">Abroad,</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-hero leading-[1.05] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.15)]">
+              <span className="font-normal">Fertility Treatment</span>{' '}
+              <span className="relative inline-block">
+                <span className="relative z-10 italic bg-gradient-to-r from-accent-200 via-accent-300 to-pink-200 bg-clip-text text-transparent drop-shadow-none" style={{ WebkitTextStroke: '0.3px rgba(255,255,255,0.1)' }}>
+                  Abroad,
+                </span>
+                <span className="absolute -bottom-1 left-0 right-0 h-[6px] bg-gradient-to-r from-accent-400/50 via-pink-400/50 to-accent-400/50 rounded-full blur-sm" />
+              </span>
               <br className="hidden sm:block" />
-              Made Simple
+              <span className="text-white/95 font-normal">Made Simple</span>
             </h1>
-            <p className="mt-5 text-lg text-white/70 leading-relaxed max-w-xl">
+            <p className="mt-6 text-base md:text-lg lg:text-xl font-body text-white/75 leading-relaxed max-w-xl tracking-wide font-light">
               From your first inquiry to your flight home, we manage every detail — visas, flights, luxury hotels, and world-class fertility care in 6+ countries.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Link to="/contact" className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-pink-500 text-white px-7 py-3.5 rounded-xl font-semibold shadow-lg shadow-accent-500/25 hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all duration-300">
+              <Link to="/contact" className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-pink-500 text-white px-7 py-3.5 rounded-xl font-body font-semibold tracking-wide shadow-lg shadow-accent-500/25 hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all duration-300">
                 Plan My Trip <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
-              <Link to="/cost-calculator" className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/25 text-white px-7 py-3.5 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300">
+              <Link to="/cost-calculator" className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/25 text-white px-7 py-3.5 rounded-xl font-body font-semibold tracking-wide hover:bg-white/20 transition-all duration-300">
                 Cost Calculator
               </Link>
             </div>
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/60">
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm font-body text-white/60">
               {[
                 { icon: ShieldCheck, label: 'JCI-Accredited Clinics' },
                 { icon: Users, label: '12,500+ Families Helped' },
