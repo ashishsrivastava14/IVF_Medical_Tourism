@@ -360,24 +360,28 @@ export default function HomePage() {
                   <DollarSign className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-3">Save Up to 70%</h3>
-                <p className="text-gray-400 leading-relaxed mb-6">
-                  World-class IVF from $3,500. Same quality as the US or UK at a fraction of the price. All costs transparent and upfront — no surprises.
+                <p className="text-gray-400 leading-relaxed mb-4">
+                  World-class IVF starting from $3,500 — the same advanced procedures performed in the US or UK, but at a fraction of the cost. Every expense is transparent and itemized upfront, so there are never any surprises on your bill.
                 </p>
-                <div className="space-y-3">
+                <p className="text-gray-500 text-sm leading-relaxed mb-5">
+                  Our partner clinics use the latest equipment and follow international protocols, ensuring outcomes that match or exceed Western averages. Flexible payment plans and financing options are available for every budget.
+                </p>
+                <div className="space-y-2.5">
                   {[
-                    { label: 'IVF Treatment', home: '$15,000', abroad: '$3,500' },
-                    { label: 'ICSI + PGT', home: '$22,000', abroad: '$6,000' },
-                    { label: 'Egg Donation', home: '$30,000', abroad: '$8,000' },
-                  ].map((row, i) => (
-                    <div key={i} className="flex items-center justify-between bg-white/5 rounded-xl px-4 py-3">
-                      <span className="text-sm text-gray-300">{row.label}</span>
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-500 line-through">{row.home}</span>
-                        <span className="text-sm font-bold text-emerald-400">{row.abroad}</span>
-                      </div>
+                    { icon: CheckCircle2, text: 'No hidden fees — every cost itemized before you commit' },
+                    { icon: ShieldCheck, text: 'All-inclusive packages: treatment, medications & follow-up' },
+                    { icon: DollarSign, text: 'Flexible payment plans and financing for every budget' },
+                    { icon: Globe, text: 'Price-match guarantee across 6+ countries' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-center gap-3 bg-white/5 rounded-xl px-4 py-2.5 hover:bg-white/[0.08] transition-colors">
+                      <item.icon className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                      <span className="text-sm text-gray-300">{item.text}</span>
                     </div>
                   ))}
                 </div>
+                <Link to="/cost-calculator" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary-300 hover:text-primary-200 transition-colors">
+                  See full cost comparison <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
             </div>
 
