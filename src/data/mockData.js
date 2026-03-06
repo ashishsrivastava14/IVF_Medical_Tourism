@@ -190,7 +190,7 @@ export const clinics = [
   {
     id: 3,
     name: 'Prague Fertility Centre',
-    logo: 'https://images.unsplash.com/photo-1587351021759-3772687a4ed4?w=400',
+    logo: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=400',
     country: 'CZ',
     city: 'Prague',
     address: 'Vodičkova 30, 110 00 Praha 1',
