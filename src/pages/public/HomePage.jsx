@@ -131,43 +131,43 @@ export default function HomePage() {
                 <span className="text-sm font-medium text-white/90">Trusted by 12,500+ families worldwide</span>
               </div> */}
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-display font-bold leading-[1.1] text-white">
-                {heroSlides[currentSlide].title}{' '}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-hero leading-[1.05] text-white tracking-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.15)]">
+                <span className="font-normal">{heroSlides[currentSlide].title}</span>{' '}
                 <span className="relative inline-block">
-                  <span className="relative z-10 bg-gradient-to-r from-accent-300 via-accent-400 to-pink-300 bg-clip-text text-transparent">
+                  <span className="relative z-10 italic bg-gradient-to-r from-accent-200 via-accent-300 to-pink-200 bg-clip-text text-transparent drop-shadow-none" style={{ WebkitTextStroke: '0.3px rgba(255,255,255,0.1)' }}>
                     {heroSlides[currentSlide].highlight}
                   </span>
-                  <span className="absolute -bottom-1 left-0 right-0 h-[6px] bg-gradient-to-r from-accent-400/60 to-pink-400/60 rounded-full blur-[1px]" />
+                  <span className="absolute -bottom-1 left-0 right-0 h-[6px] bg-gradient-to-r from-accent-400/50 via-pink-400/50 to-accent-400/50 rounded-full blur-sm" />
                 </span>
                 <br className="hidden sm:block" />
-                <span className="text-white">{heroSlides[currentSlide].titleEnd}</span>
+                <span className="text-white/95 font-normal">{heroSlides[currentSlide].titleEnd}</span>
               </h1>
 
-              <p className="mt-6 text-base md:text-lg lg:text-xl text-white/80 leading-relaxed max-w-xl">
+              <p className="mt-6 text-base md:text-lg lg:text-xl font-body text-white/75 leading-relaxed max-w-xl tracking-wide font-light">
                 {heroSlides[currentSlide].subtitle}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3 sm:gap-4">
                 <Link to="/cost-calculator"
-                  className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-pink-500 text-white px-6 sm:px-8 py-3.5 rounded-xl font-semibold shadow-lg shadow-accent-500/25 hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all duration-300"
+                  className="group inline-flex items-center gap-2 bg-gradient-to-r from-accent-500 to-pink-500 text-white px-6 sm:px-8 py-3.5 rounded-xl font-body font-semibold tracking-wide shadow-lg shadow-accent-500/25 hover:shadow-accent-500/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Calculate Your Savings
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link to="/doctors"
-                  className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/25 text-white px-6 sm:px-8 py-3.5 rounded-xl font-semibold hover:bg-white/20 hover:border-white/40 hover:-translate-y-0.5 transition-all duration-300"
+                  className="inline-flex items-center gap-2 backdrop-blur-md bg-white/10 border border-white/25 text-white px-6 sm:px-8 py-3.5 rounded-xl font-body font-semibold tracking-wide hover:bg-white/20 hover:border-white/40 hover:-translate-y-0.5 transition-all duration-300"
                 >
                   Find a Doctor
                 </Link>
               </div>
 
-              <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <div className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm font-body">
                 {[
                   { icon: ShieldCheck, label: 'JCI-Accredited Clinics' },
                   { icon: Globe, label: '6+ Countries' },
                   { icon: Heart, label: '12,500+ Babies Born' },
                 ].map((badge, i) => (
-                  <span key={i} className="flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors">
+                  <span key={i} className="flex items-center gap-2 text-white/70 hover:text-white/90 transition-colors tracking-wide">
                     <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-sm">
                       <badge.icon className="w-4 h-4 text-accent-300" />
                     </span>
