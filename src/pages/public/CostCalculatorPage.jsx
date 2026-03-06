@@ -6,7 +6,7 @@ import { Calculator, ArrowDown } from 'lucide-react';
 export default function CostCalculatorPage() {
   const [homeCountry, setHomeCountry] = useState('US');
   const [treatment, setTreatment] = useState('ivf');
-  const [destCountry, setDestCountry] = useState('IN');
+  const [destCountry, setDestCountry] = useState('SG');
 
   const treatmentKey = { ivf: 'ivf', icsi: 'icsi', 'egg-freezing': 'eggFreezing', 'egg-donation': 'eggDonation', pgt: 'pgt' };
   const key = treatmentKey[treatment] || 'ivf';

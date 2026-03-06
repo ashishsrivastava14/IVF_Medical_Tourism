@@ -5,10 +5,10 @@ import { adminStats } from '../../data/mockData';
 
 export default function AdminVisa() {
   const pendingApplications = [
-    { id: 'V-001', patient: 'Emily Chen', country: 'IN', type: 'Medical Visa', submitted: '2026-03-01', status: 'pending' },
+    { id: 'V-001', patient: 'Emily Chen', country: 'SG', type: 'Medical Visit Pass', submitted: '2026-03-01', status: 'pending' },
     { id: 'V-002', patient: 'Michael Brown', country: 'CZ', type: 'Schengen Visa', submitted: '2026-02-28', status: 'pending' },
     { id: 'V-003', patient: 'Sophia Kim', country: 'AE', type: 'Medical Tourism Visa', submitted: '2026-03-02', status: 'pending' },
-    { id: 'V-004', patient: 'Jennifer Williams', country: 'IN', type: 'Medical Visa', submitted: '2026-02-20', status: 'approved' },
+    { id: 'V-004', patient: 'Jennifer Williams', country: 'SG', type: 'Visitor Pass', submitted: '2026-02-20', status: 'approved' },
   ];
 
   return (

@@ -78,7 +78,7 @@ export default function ContactPage() {
             <div className="space-y-3 text-sm text-gray-600">
               <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-primary-500" /> info@ferticareglobal.com</p>
               <p className="flex items-center gap-2"><Phone className="w-4 h-4 text-primary-500" /> +1 (800) 555-FERT</p>
-              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary-500" /> New York, London, Mumbai, Dubai</p>
+              <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-primary-500" /> New York, London, Singapore, Dubai</p>
               <p className="flex items-center gap-2"><Clock className="w-4 h-4 text-primary-500" /> 24/7 Patient Support</p>
             </div>
           </div>

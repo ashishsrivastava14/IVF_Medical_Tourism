@@ -45,7 +45,7 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2"><Mail className="w-4 h-4 mt-0.5 shrink-0" /> info@ferticareglobal.com</li>
               <li className="flex items-start gap-2"><Phone className="w-4 h-4 mt-0.5 shrink-0" /> +1 (800) 555-FERT</li>
-              <li className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" /> Offices in New York, London, Mumbai, Dubai</li>
+              <li className="flex items-start gap-2"><MapPin className="w-4 h-4 mt-0.5 shrink-0" /> Offices in New York, London, Singapore, Dubai</li>
             </ul>
           </div>
         </div>

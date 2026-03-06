@@ -451,7 +451,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">6+ Countries</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-4">
-                  Access top clinics across India, Mexico, Czech Republic, Japan, UAE, Greece, and more.
+                  Access top clinics across Singapore, Mexico, Czech Republic, Japan, Canada, UAE, Greece, and more.
                 </p>
                 <div className="flex items-center gap-3">
                   {countries.slice(0, 6).map((c) => (
