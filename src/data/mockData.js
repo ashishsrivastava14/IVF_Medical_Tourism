@@ -51,7 +51,7 @@ export const doctors = [
   {
     id: 3,
     name: 'Dr. Elena Petrova',
-    photo: 'https://images.unsplash.com/photo-1594824476967-48c8b964f267?w=400',
+    photo: 'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=400',
     specialty: 'Clinical Embryologist & IVF Specialist',
     clinic: 'Prague Fertility Centre',
     clinicId: 3,
